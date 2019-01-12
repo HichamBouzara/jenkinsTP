@@ -1,0 +1,87 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'info.solidsoft.pitest' version '1.3.0'
+    id "org.sonarqube" version "2.6.2"
+    id "maven-publish"
+    id "com.alexleventer.slack" version "1.0.3"
+}
+
+
+group 'dz.esi'
+version '1.1'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+jacoco {
+    toolVersion = "0.8.2"
+    reportsDir = file("$buildDir/customJacocoReportDir")
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.8
+            }
+        }
+    }
+}
+
+dependencies {
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    // https://mvnrepository.com/artifact/org.mockito/mockito-all
+    testCompile group: 'org.mockito', name: 'mockito-all', version: '1.8.4'
+
+
+}
+
+
+task generateMatrixAPI (type:Copy) {
+    from ('build/customJacocoReportDir') {
+        include '*'
+        into 'JacocoReportDir'
+    }
+    from ('build/libs') {
+        include '*'
+        into 'API'
+    }
+    from ('build/reports/tests/test') {
+        include '*'
+        into 'test-results'
+    }
+    into "/home/d3v/MatrixRelease/Matrix_v_"+version
+}
+
+apply plugin: 'maven-publish'
+
+
+
+
+
+uploadArchives {
+    repositories {
+        maven {
+            credentials {
+                username "myMavenRepo"
+                password "a26092013"
+            }
+            url "https://mymavenrepo.com/repo/LITlZsl1hoI3LlDGPLt4/"
+        }
+    }
+}
+
+slack {
+    webhookUrl "https://hooks.slack.com/services/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"
+    username "Gradle"
+    shouldMonitor "build", "test"
+}
+
+
+test.finalizedBy  ("jacocoTestCoverageVerification" , "jacocoTestReport" ,"sonarqube")
+uploadArchives.dependsOn generateMatrixAPI
