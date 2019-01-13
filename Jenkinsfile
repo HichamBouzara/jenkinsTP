@@ -47,7 +47,7 @@ pipeline {
         branch 'master'
       }
       steps {
-        slackSend(message: 'Ya bouzara', token: 'xoxp-522407053698-522239839092-522407735906-d7d4bdedfe3467f29fc60fcb107b48c9', baseUrl: 'https://hooks.slack.com/services/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', channel: '#general', tokenCredentialId: 'xoxp-522407053698-522239839092-522407735906-d7d4bdedfe3467f29fc60fcb107b48c9')
+        slackSend(message: 'Ya bouzara')
       }
     }
   }
