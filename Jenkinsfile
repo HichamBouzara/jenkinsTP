@@ -11,6 +11,7 @@ pipeline {
     stage('Mail notification') {
       steps {
         sh 'ls'
+        mail(subject: 'notification ', body: 'new deployment', to: 'fa_benrandja@esi.dz')
       }
     }
     stage('Code analysis') {
