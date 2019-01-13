@@ -31,8 +31,8 @@ pipeline {
                     }
                   }
         stage('Test reports') {
-          steps {
-            sh 'gradle jacocoTestReport'
+           steps {
+            jacoco(maximumBranchCoverage: '60')
           }
         }
       }
