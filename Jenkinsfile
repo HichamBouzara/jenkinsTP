@@ -22,14 +22,14 @@ pipeline {
           }
         }
         stage('SonarQube') {
-                    steps {
-                       
-                        withSonarQubeEnv('sonarqube') {
-                          sh '/home/d3v/Downloads/d3v.deb/sonra/sonar-scanner-3.2.0.1227-linux/bin/sonar-scanner'
-                        }
-                          waitForQualityGate abortPipeline: false
-                    }
-                  }
+          steps {
+            withSonarQubeEnv('sonarqube') {
+              sh '/home/d3v/Downloads/d3v.deb/sonra/sonar-scanner-3.2.0.1227-linux/bin/sonar-scanner'
+            }
+
+            waitForQualityGate true
+          }
+        }
         stage('Test reports') {
           steps {
             sh 'gradle jacocoTestReport'
@@ -42,7 +42,7 @@ pipeline {
         sh 'gradle uploadArchives	'
       }
     }
-     stage('slack notification') {
+    stage('slack notification') {
       when {
         branch 'master'
       }
