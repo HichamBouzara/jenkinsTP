@@ -21,6 +21,15 @@ pipeline {
             sh 'gradle sonarqube'
           }
         }
+        stage('SonarQube') {
+                    steps {
+                       
+                        withSonarQubeEnv('sonarqube') {
+                          sh '/home/d3v/Downloads/d3v.deb/sonra/sonar-scanner-3.2.0.1227-linux/bin/sonar-scanner'
+                        }
+                          waitForQualityGate abortPipeline: false
+                    }
+                  }
         stage('Test reports') {
           steps {
             sh 'gradle jacocoTestReport'

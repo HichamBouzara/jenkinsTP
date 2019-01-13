@@ -1,7 +1,8 @@
 package com.ogl.service;
 
-import com.ogl.exception.NoSquareException;
-import com.ogl.model.Matrix;
+import com.example.exception.NoSquareException;
+import com.example.model.Matrix;
+import com.example.service.MatrixMathematics;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -64,7 +65,7 @@ public class MatrixMathematicsTest {
         }
     }
 
-
+*/
     @Test
     public void determinant() throws Exception {
         matrix.setValues(dataT);
@@ -119,5 +120,5 @@ public class MatrixMathematicsTest {
         double determinant = MatrixMathematics.determinant(mm) ;
         assertEquals(determinant , 0d ,0);
     }
-*/
+
 }
