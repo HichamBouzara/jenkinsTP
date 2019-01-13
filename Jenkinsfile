@@ -9,8 +9,17 @@ pipeline {
       }
     }
     stage('sonarqube') {
-      steps {
-        sh 'gradle sonarqube'
+      parallel {
+        stage('sonarqube') {
+          steps {
+            sh 'gradle sonarqube'
+          }
+        }
+        stage('TestReporting') {
+          steps {
+            sh 'gradle jacocoTestReport'
+          }
+        }
       }
     }
   }
