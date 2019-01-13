@@ -2,8 +2,17 @@ pipeline {
   agent any
   stages {
     stage('build') {
-      steps {
-        sh 'gradle build'
+      parallel {
+        stage('build') {
+          steps {
+            sh 'gradle build'
+          }
+        }
+        stage('archivage') {
+          steps {
+            sh 'gradle javadoc'
+          }
+        }
       }
     }
   }
