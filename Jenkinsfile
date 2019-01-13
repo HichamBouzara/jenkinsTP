@@ -5,7 +5,8 @@ pipeline {
       parallel {
         stage('build') {
           steps {
-            sh 'gradle build'
+            sh '''gradle build ;
+gradle javadoc'''
           }
         }
         stage('archivage') {
